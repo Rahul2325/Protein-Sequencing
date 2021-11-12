@@ -318,8 +318,5 @@ if __name__ == "__main__":
     #test.testGenerateProtein()
     # test.testSynthesizeProteins()
     # test.testCommonProteins()
-    test.testCombineProteins()
-    test.testAminoAcidDictionary()
-    test.testFindAminoAcidDifferences()
     test.runWeek2()
 
