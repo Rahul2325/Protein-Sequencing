@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from os import read
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -17,7 +18,9 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+   open_=open(filename,"r").read().splitlines()
+   string="".join(open_)
+   return string 
 
 
 '''
@@ -27,7 +30,22 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    res=dna[startIndex:]
+    list_=[]
+    string=""#atgaug
+    ignore=["UAG", "UAA","UGA"]
+    for letter in range(len(res)):
+        if len(string)!=3:
+            string+=res[letter]
+        if len(string)==3:
+            x= string.replace("T","U")
+            if x in ignore:
+                list_.append(x)
+                return list_
+            else:
+                list_.append(x)
+                string=""
+    return list_
 
 
 '''
@@ -38,7 +56,13 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    f = open(filename)
+    read = json.load(f)
+    d={}
+    for x,y in read.items():
+        for i in y:
+            d[i.replace('T','U')]=x
+    return d
 
 
 '''
@@ -48,7 +72,13 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    list_=[]
+    if codons[0] =="AUG":
+        list_.append("Start")
+    for i in range(1,len(codons)):
+        if codons[i] in codonD.keys():
+            list_.append(codonD[codons[i]])
+    return list_
 
 
 '''
@@ -58,14 +88,28 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    reading_file = readFile(dnaFilename) #returs string
+    making_dic = makeCodonDictionary(codonFilename) # returns dict
+    i=0
+    count=0
+    temp=[]
+    while i < len(reading_file):
+        if reading_file[i:i+3] == "ATG":
+            dna_list= dnaToRna(reading_file,i) #returns list
+            prot = generateProtein(dna_list, making_dic) #list of strings
+            temp.append(prot)
+            i = i+3*len(dna_list)
+        else:
+            i+=1
+            count+=1
+    return temp
 
 
-def runWeek1():
-    print("Human DNA")
-    humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
-    print("Elephant DNA")
-    elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
+# def runWeek1():
+#     print("Human DNA")
+#     humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
+#     print("Elephant DNA")
+#     elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
 
 
 ### WEEK 2 ###
@@ -120,13 +164,13 @@ def displayTextResults(commonalities, differences):
     return
 
 
-def runWeek2():
-    humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
-    elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
+# def runWeek2():
+#     humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
+#     elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
 
-    commonalities = commonProteins(humanProteins, elephantProteins)
-    differences = findAminoAcidDifferences(humanProteins, elephantProteins, 0.005)
-    displayTextResults(commonalities, differences)
+#     commonalities = commonProteins(humanProteins, elephantProteins)
+#     differences = findAminoAcidDifferences(humanProteins, elephantProteins, 0.005)
+#     displayTextResults(commonalities, differences)
 
 
 ### WEEK 3 ###
@@ -186,10 +230,10 @@ def runFullProgram():
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # runWeek1()
 
     ## Uncomment these for Week 2 ##
     """
@@ -206,3 +250,8 @@ if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()
     """
+    #test.testReadFile()
+    #test.testDnaToRna()
+    #test.testMakeCodonDictionary()
+    #test.testGenerateProtein()
+    test.testSynthesizeProteins()
