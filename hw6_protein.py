@@ -304,7 +304,17 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    return
+    print(biggestDiffs[0])
+    black=[]
+    first_item=[]
+    for row in biggestDiffs:
+        first_item.append(row[0])
+    for row in labels:
+        if row in first_item:
+            black.append("black")
+        else:
+            black.append("white")
+    return black
 
 
 '''
