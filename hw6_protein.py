@@ -324,6 +324,16 @@ Parameters: no parameters
 Returns: None
 '''
 def runFullProgram():
+    human = synthesizeProteins("data/human_p53.txt","data/codon_table.json")
+    elephant = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
+    common = commonProteins(human,elephant)
+    difference = findAminoAcidDifferences(human,elephant, 0.005)
+    displayTextResults(common,difference)
+    labels = makeAminoAcidLabels(human,elephant)
+    f1= setupChartData(labels,human)
+    f2= setupChartData(labels,elephant)
+    elist= makeEdgeList(labels,difference)
+    createChart (labels,f1,"human",f2,"elephant",edgeList=elist)
     return
 
 
@@ -337,20 +347,20 @@ if __name__ == "__main__":
     # runWeek1()
 
     ## Uncomment these for Week 2 ##
-    """
+    
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    
 
     ## Uncomment these for Week 3 ##
-    """
+    
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
     test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()
-    """
+    
     #test.testReadFile()
     #test.testDnaToRna()
     #test.testMakeCodonDictionary()
@@ -358,6 +368,7 @@ if __name__ == "__main__":
     # test.testSynthesizeProteins()
     # test.testCommonProteins()
     #test.runWeek2()
-    test.testMakeAminoAcidLabels()
-    test.testCreateChart()
+    # test.testMakeAminoAcidLabels()
+    # test.testCreateChart()
+    test.runFullProgram()
 
