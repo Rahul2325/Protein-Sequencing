@@ -201,16 +201,38 @@ Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
 def displayTextResults(commonalities, differences):
+    print("Printing the Commnalities!")
+    for i in sorted(commonalities):
+        commonProteins = ""
+        let = i[1:len(i)-1] # to remove start and stop [start, ser, pro, leu,stop]
+        count=0
+        for j in let:
+            commonProteins+=j   #ser,pro,leu
+            count+=1            #1,2,3
+            if count !=len(let): #not equal
+                commonProteins+="-" #ser-pro-leu
+        print(commonProteins)
+        '''
+        for i in commonalities:
+            if i =="Start" or i =="Stop":
+                pass
+            else:
+                print(i)
+        '''
+
+    print("Printing DNA sequences!")
+    for item in differences:
+        print(item[0],":",round(item[1]*100,2),"% in seq1,",round(item[2]*100,2),"% in seq2")
     return
 
 
-# def runWeek2():
-#     humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
-#     elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
+def runWeek2():
+    humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
+    elephantProteins = synthesizeProteins("data/elephant_p53.txt", "data/codon_table.json")
 
-#     commonalities = commonProteins(humanProteins, elephantProteins)
-#     differences = findAminoAcidDifferences(humanProteins, elephantProteins, 0.005)
-#     displayTextResults(commonalities, differences)
+    commonalities = commonProteins(humanProteins, elephantProteins)
+    differences = findAminoAcidDifferences(humanProteins, elephantProteins, 0.005)
+    displayTextResults(commonalities, differences)
 
 
 ### WEEK 3 ###
@@ -299,3 +321,5 @@ if __name__ == "__main__":
     test.testCombineProteins()
     test.testAminoAcidDictionary()
     test.testFindAminoAcidDifferences()
+    test.runWeek2()
+
