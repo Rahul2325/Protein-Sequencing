@@ -121,7 +121,13 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
+    temp=[]
+    for arow in proteinList1:
+        for brow in proteinList2:
+            if arow==brow and arow not in temp:
+                temp.append(arow)
+
+    return temp
 
 
 '''
@@ -255,3 +261,4 @@ if __name__ == "__main__":
     #test.testMakeCodonDictionary()
     #test.testGenerateProtein()
     test.testSynthesizeProteins()
+    test.testCommonProteins()
