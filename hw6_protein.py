@@ -137,7 +137,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def combineProteins(proteinList):
-    return
+    _list=[]
+    for i in proteinList:
+        for word in i:
+            _list.append(word)
+    # print(_list)
+    return _list
 
 
 '''
@@ -147,7 +152,13 @@ Parameters: list of strs
 Returns: dict mapping strs to ints
 '''
 def aminoAcidDictionary(aaList):
-    return
+    result={}
+    for x in aaList:
+        if x not in result:
+            result[x]=1
+        else:
+            result[x]+=1
+    return result
 
 
 '''
@@ -260,5 +271,7 @@ if __name__ == "__main__":
     #test.testDnaToRna()
     #test.testMakeCodonDictionary()
     #test.testGenerateProtein()
-    test.testSynthesizeProteins()
-    test.testCommonProteins()
+    # test.testSynthesizeProteins()
+    # test.testCommonProteins()
+    test.testCombineProteins()
+    test.testAminoAcidDictionary()
